@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+"""Basemodel.py"""
+import uuid
+from datetime import datetime
+
+
+class BaseModel:
+    """Class BaseModel"""
+
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
+
+        print(self.__dict__)
+    def __str__(self):
+        return "[{}] ({}) {}".format(self.__name__)
+
+m = BaseModel()
