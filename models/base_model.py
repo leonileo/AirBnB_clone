@@ -8,9 +8,11 @@ class BaseModel:
     """Class BaseModel"""
 
     def __init__(self):
+        tform = "%Y-%m-%dT%H:%M:%S.%f"
+        
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now().isoformat()
-        self.updated_at = datetime.now().isoformat()
+        self.created_at = datetime.now().strftime(tform)
+        self.updated_at = datetime.now().strftime(tform)
 
     def __str__(self):
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
