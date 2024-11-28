@@ -19,7 +19,7 @@ class BaseModel:
                 if key != "__class__":
                     if key == "created_at" or key == "updated_at":
                         self.__dict__[key] = datetime.strptime(
-                            kwargs[key], dformat)
+                            value, dformat)
 
     def __str__(self):
         """Return a string representation of the instance."""
