@@ -5,17 +5,22 @@ from datetime import datetime
 
 
 class BaseModel:
-    """Class BaseModel"""
+    """Defines all common attributes/methods for other classes."""
 
-    def __init__(self):
-        """Instantiation."""
-
+    def __init__(self, *args, **kwargs):
+        """Initialize a new instance with unique id and timestamps."""
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+
+        if kwargs:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        self.__dict__[key] = datetime.fromisoformat(kwargs[key])
 
     def __str__(self):
-        """Print the class name and it's dict."""
+        """Return a string representation of the instance."""
         return "[{}] ({}) {}".format(
             self.__class__.__name__, self.id, self.__dict__
         )
@@ -23,7 +28,7 @@ class BaseModel:
     def save(self):
         """Updates the public instance attribute updated_at
         with the current datetime."""
-        self.updated_at = datetime.today()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of __dict__."""
