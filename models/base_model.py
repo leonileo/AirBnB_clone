@@ -17,7 +17,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     if key == "created_at" or key == "updated_at":
-                        self.__dict__[key] = datetime.fromisoformat(kwargs[key])
+                        self.__dict__[key] = datetime.fromisoformat(
+                            kwargs[key])
 
     def __str__(self):
         """Return a string representation of the instance."""
