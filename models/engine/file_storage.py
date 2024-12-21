@@ -34,5 +34,12 @@ class FileStorage:
             for key, value in obj_dict.items():
                 class_name = value["__class__"]
                 from models.base_model import BaseModel
+                from models.user import User
+                from models.state import State
+                from models.city import City
+                from models.amenity import Amenity
+                from models.place import Place
+                from models.review import Review
+                
                 cls = eval(class_name)
                 self.__objects[key] = cls(**value)
