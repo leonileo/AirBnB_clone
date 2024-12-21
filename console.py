@@ -17,14 +17,14 @@ class HBNBCommand(cmd.Cmd):
         "User": User,
     }
     
-    def do_create(self, args):
+    def do_create(self, arg):
         """Create a new instance of BaseModel and saves it to a JSON file."""
-        if not args:
+        if not arg:
             print("** class name missing **")
-        elif args not in self.classes:
+        elif arg not in self.classes:
             print("** class doesn't exist **")
         else:
-            new_instance = BaseModel()
+            new_instance = self.classes[arg]()
             new_instance.save()
             print(new_instance.id)
 
@@ -66,17 +66,17 @@ class HBNBCommand(cmd.Cmd):
                 del storage.all()[key]
                 storage.save()
 
-    def do_all(self, args):
+    def do_all(self, arg):
         """Print all instance of a model."""
-        if args and args[0] not in self.classes :
+        if arg and arg not in self.classes:
             print("** class doesn't exist **")
 
-        objs = storage.all()
-        result = []
-        for key, obj in objs.items():
-            if not args or key.startswith(args):
-                result.append(str(obj))
-        print(result)
+        else:        
+            result = []
+            for obj in storage.all().values():
+                if not arg or obj.__class__.__name__ == arg:
+                    result.append(str(obj))
+            print(result)
 
     def do_update(self, args):
         """ Updates an instance. """
