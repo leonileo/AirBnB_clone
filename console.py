@@ -2,6 +2,7 @@
 """The console | console 0.0.1"""
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import json
 
@@ -11,11 +12,16 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
 
-    def do_create(self, model):
+    classes = {
+        "BaseModel": BaseModel,
+        "User": User,
+    }
+    
+    def do_create(self, args):
         """Create a new instance of BaseModel and saves it to a JSON file."""
-        if not model:
+        if not args:
             print("** class name missing **")
-        elif model != "BaseModel":
+        elif args not in self.classes:
             print("** class doesn't exist **")
         else:
             new_instance = BaseModel()
@@ -29,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
 
         if not args:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in self.classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -47,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
 
         if not args:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in self.classes:
             print("** class dosen't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -62,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """Print all instance of a model."""
-        if args and args != "BaseModel":
+        if args and args[0] not in self.classes :
             print("** class doesn't exist **")
 
         objs = storage.all()
@@ -79,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
 
-        elif args[0] != "BaseModel":
+        elif args[0] not in self.classes:
             print("** class doesn't exist **")
 
         elif len(args) < 2:
